@@ -1,23 +1,31 @@
-import { trackVisitorService } from "../services/track.service.js"
+import { trackService } from "../services/track.service.js"
 
 export const trackVisitor = async (req, res) => {
     try {
-        const result = await trackVisitorService({
+        const result = await trackService({
             apiKey: req.body.apiKey,
             path: req.body.path,
             title: req.body.title,
             referrer: req.body.referrer,
             visitorId: req.cookies.visitorId,
+            sessionId: req.cookies.sessionId, 
         });
         // New visitor
-        if(result.newVisitorId){
-            res.cookie("visitorId", result.newVisitorId, {
+        if(result.isNewVisitor){
+            res.cookie("visitorId", result.visitor.visitorId, {
                 httpOnly: true,
                 sameSite: "lax",
                 secure: false,
                 maxAge: 365 * 24 * 60 * 60 * 1000,
             });            
         }
+        if (result.isNewSession) {
+            res.cookie("sessionId", result.session.sessionId, {
+                httpOnly: true,
+            sameSite: "lax",
+            secure: false,
+            });
+        }        
         return res.status(200).json({
             success: true,
             message: "Tracking request received",

@@ -50,6 +50,7 @@ model Visitor {
 
 model Session {
   id        Int        @id @default(autoincrement())
+  sessionId String @unique
   visitorId Int
   visitor   Visitor    @relation(fields: [visitorId], references: [id])
   projectId Int
