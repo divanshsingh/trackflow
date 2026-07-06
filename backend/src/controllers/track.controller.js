@@ -1,6 +1,7 @@
 import { trackService } from "../services/track.service.js"
 
 export const trackVisitor = async (req, res) => {
+    console.log(req.cookies);
     try {
         const result = await trackService({
             apiKey: req.body.apiKey,
