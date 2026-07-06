@@ -92,12 +92,20 @@ export const trackService = async ({ apiKey, path, title, referrer, visitorId, s
             },
         });
         isNewSession = true;
-    }    
-    }
+    } 
+        }
+        const pageView = await prisma.pageView.create({
+        data: {
+            sessionId: session.id,
+            path,
+            title,
+        },        
+        })
       return {
     project,
     visitor,
     session,
+    pageView,
     isNewVisitor,
     isNewSession,
 };
