@@ -1,7 +1,13 @@
 import { trackService } from "../services/track.service.js"
+import {UAParser} from "ua-parser-js";
 
 export const trackVisitor = async (req, res) => {
-    console.log(req.cookies);
+    
+    const parser = new UAParser(req.headers["user-agent"]);
+
+    const browser = parser.getBrowser().name || "Unknown";
+    const os = parser.getOS().name || "Unknown";
+    const device = parser.getDevice().type || "Desktop";
     try {
         const result = await trackService({
             apiKey: req.body.apiKey,
@@ -10,6 +16,9 @@ export const trackVisitor = async (req, res) => {
             referrer: req.body.referrer,
             visitorId: req.cookies.visitorId,
             sessionId: req.cookies.sessionId, 
+            browser,
+            os,
+            device,
         });
         // New visitor
         if(result.isNewVisitor){

@@ -1,7 +1,16 @@
 import prisma from "../lib/prisma.js";
 import { v4 as uuidv4} from 'uuid';
 
-export const trackService = async ({ apiKey, path, title, referrer, visitorId, sessionId}) => {
+export const trackService = async ({ 
+    apiKey, 
+    path, 
+    title, 
+    referrer, 
+    visitorId, 
+    sessionId,
+    browser,
+    os,
+    device,}) => {
     // 1. Find Project
     const project = await prisma.project.findUnique({
         where:{
@@ -64,9 +73,9 @@ export const trackService = async ({ apiKey, path, title, referrer, visitorId, s
             sessionId: newSessionId,
             visitorId: visitor.id,
             projectId: project.id,
-            browser: "Unknown",
-            device: "Unknown",
-            os: "Unknown",
+            browser,
+            device,
+            os,
             referrer,
         },
         })
@@ -85,9 +94,9 @@ export const trackService = async ({ apiKey, path, title, referrer, visitorId, s
                 sessionId: newSessionId,
                 visitorId: visitor.id,
                 projectId: project.id,
-                browser: "Unknown",
-                device: "Unknown",
-                os: "Unknown",
+                browser,
+                device,
+                os,
                 referrer,
             },
         });
