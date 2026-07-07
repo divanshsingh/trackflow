@@ -87,3 +87,32 @@ export const getTopPagesService = async (projectId, userId) => {
 // GROUP BY path
 // ORDER BY COUNT(path) DESC
 // LIMIT 10;
+
+export const getVisitorTrendService = async (projectId, userId) => {
+    const project = await prisma.project.findFirst({
+        where:{
+            id: Number(projectId),
+            userId,
+        }
+    })
+    if (!project) {
+        throw new Error("Project not found");
+    }
+    const visitors = await prisma.visitor.findMany({
+        where: {
+            projectId: project.id,
+        },
+        select: {
+            firstSeen: true,
+        },        
+    })
+    const trend = {}
+    visitors.forEach((visitor) => {
+        const date = visitor.firstSeen.toISOString().split("T")[0];
+        trend[date] = (trend[date] || 0) + 1;
+    })
+
+    return Object.entries(trend).map(([date, visitors]) => ({
+    date, visitors,
+    }));
+}
