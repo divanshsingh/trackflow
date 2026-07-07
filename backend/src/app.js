@@ -2,6 +2,7 @@ import express from "express";
 import authRouter from "./routes/auth.routes.js";
 import projectRouter from './routes/project.routes.js'
 import trackRouter from './routes/track.routes.js'
+import analyticsRouter from "./routes/analytics.routes.js"
 import cookieParser from "cookie-parser"
 import path from "path";
 import { fileURLToPath } from "url";
@@ -25,6 +26,7 @@ app.use("/tracker", express.static(path.join(__dirname, "../../tracker")));
 app.use("/api/auth", authRouter)
 app.use("/api/projects", projectRouter)
 app.use("/api/track", trackRouter)
+app.use("/api/analytics", analyticsRouter)
 
 
 export default app;
