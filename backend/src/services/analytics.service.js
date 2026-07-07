@@ -116,3 +116,36 @@ export const getVisitorTrendService = async (projectId, userId) => {
     date, visitors,
     }));
 }
+
+export const getReferrersService = async (projectId, userId) => {
+    const project = await prisma.project.findFirst({
+        where:{
+            id: Number(projectId),
+            userId,
+        }
+    })
+    if (!project) {
+        throw new Error("Project not found");
+    }
+    const referrers = await prisma.session.groupBy({
+        by: ["referrer"],
+        where: {
+            projectId: project.id,
+        },
+        _count: {
+            referrer: true,
+        },
+        orderBy: {
+            _count: {
+                referrer: "desc",
+            }
+        },
+        take: 10,
+    })  
+    return referrers.map((referrer) => ({
+        referrer: referrer.referrer && referrer.referrer.trim() !== ""
+            ? referrer.referrer
+            : "Direct",
+        visits: referrer._count.referrer,
+    }));    
+}
