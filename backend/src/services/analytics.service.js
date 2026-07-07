@@ -45,3 +45,45 @@ export const getAnalyticsOverviewService = async (projectId, userId) => {
         averagePagesPerSession,
     };
 }
+
+export const getTopPagesService = async (projectId, userId) => {
+    const project = await prisma.project.findFirst({
+        where: {
+            id: Number(projectId),
+            userId,
+        }  
+    })
+    if (!project) {
+        throw new Error("Project not found");
+    }
+    const pages = await prisma.pageView.groupBy({
+        by: ["path"],
+        where: {
+            session: {
+                projectId: project.id
+            },
+        },
+        _count: {
+            path: true
+        },
+        orderBy: {
+            _count: {
+                path: "desc",
+            },            
+        },
+        take: 10,
+    })  
+    
+    return pages.map((page) => ({
+    path: page.path,
+    views: page._count.path,
+}));
+}
+
+// SELECT
+// path,
+// COUNT(path)
+// FROM PageView
+// GROUP BY path
+// ORDER BY COUNT(path) DESC
+// LIMIT 10;
