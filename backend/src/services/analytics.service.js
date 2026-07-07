@@ -149,3 +149,94 @@ export const getReferrersService = async (projectId, userId) => {
         visits: referrer._count.referrer,
     }));    
 }
+
+export const getBrowserStatsService = async (projectId, userId) => {
+    const project = await prisma.project.findFirst({
+        where: {
+            id: Number(projectId),
+            userId,
+        },
+    });
+    if (!project) {
+        throw new Error("Project not found");
+    }
+    const browsers = await prisma.session.groupBy({
+        by: ["browser"],
+        where: {
+            projectId: project.id,
+        },
+        _count: {
+            browser: true,
+        },
+        orderBy: {
+            _count: {
+                browser: "desc",
+            },
+        },
+    });
+    return browsers.map((browser) => ({
+        browser: browser.browser,
+        users: browser._count.browser,
+    }));
+};
+
+export const getDeviceStatsService = async (projectId, userId) => {
+    const project = await prisma.project.findFirst({
+        where: {
+            id: Number(projectId),
+            userId,
+        },
+    });
+    if (!project) {
+        throw new Error("Project not found");
+    }
+    const devices = await prisma.session.groupBy({
+        by: ["device"],
+        where: {
+            projectId: project.id,
+        },
+        _count: {
+            device: true,
+        },
+        orderBy: {
+            _count: {
+                device: "desc",
+            },
+        },
+    });
+    return devices.map((device) => ({
+        device: device.device,
+        users: device._count.device,
+    }));
+};
+
+export const getOSStatsService = async (projectId, userId) => {
+    const project = await prisma.project.findFirst({
+        where: {
+            id: Number(projectId),
+            userId,
+        },
+    });
+    if (!project) {
+        throw new Error("Project not found");
+    }
+
+    const operatingSystems = await prisma.session.groupBy({
+        by: ["os"],
+        where: {
+            projectId: project.id,
+        },
+        _count: {
+            os: true,
+        },
+        orderBy: {
+            _count: {
+                os: "desc",
+            },
+        },
+    });
+    return operatingSystems.map((os) => ({
+        os: os.os,
+        users: os._count.os,
+    }));
+};

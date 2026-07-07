@@ -2,7 +2,10 @@ import {
     getAnalyticsOverviewService,
     getTopPagesService,
     getVisitorTrendService,
-    getReferrersService } from "../services/analytics.service.js"
+    getReferrersService,
+    getBrowserStatsService,
+    getDeviceStatsService,
+    getOSStatsService } from "../services/analytics.service.js"
 
 export const getAnalyticsOverview = async (req, res) => {
     try{
@@ -67,3 +70,56 @@ export const getReferrers = async (req, res) => {
     } 
 
 }
+export const getBrowserStats = async (req, res) => {
+    try {
+        const result = await getBrowserStatsService(
+            req.params.projectId,
+            req.user.id
+        );
+        return res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+export const getDeviceStats = async (req, res) => {
+    try {
+        const result = await getDeviceStatsService(
+            req.params.projectId,
+            req.user.id
+        );
+        return res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+export const getOSStats = async (req, res) => {
+    try {
+        const result = await getOSStatsService(
+            req.params.projectId,
+            req.user.id
+        );
+        return res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
