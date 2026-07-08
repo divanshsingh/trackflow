@@ -17,11 +17,12 @@ app.use(express.json()); // kyuki data json ke form me ayega to express use read
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "http://localhost:3000",
     credentials: true,
-}))
+}));
 
 app.use("/tracker", express.static(path.join(__dirname, "../../tracker")));
+console.log(path.join(__dirname, "../../tracker"));
 
 app.use("/api/auth", authRouter)
 app.use("/api/projects", projectRouter)
