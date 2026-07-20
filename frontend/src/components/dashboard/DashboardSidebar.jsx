@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     BarChart3,
     LayoutDashboard,
@@ -10,6 +10,7 @@ import {
     Settings,
     LogOut,
 } from "lucide-react";
+import { logout } from "@/services/auth.service";
 
 const menuItems = [
     {
@@ -38,6 +39,15 @@ const menuItems = [
 
 ];
 export default function DashboardSidebar() {
+    const router = useRouter();
+    const handleLogout = async () => {
+    try {
+        await logout();
+        router.push("/login");
+    } catch (error) {
+        console.error(error);
+    }
+};
     const pathname = usePathname();
     return (
         <aside className="flex h-screen w-72 flex-col border-r border-zinc-800 bg-zinc-950">
@@ -90,7 +100,8 @@ export default function DashboardSidebar() {
 
             {/* Logout */}
             <div className="border-t border-zinc-800 p-4">
-                <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-zinc-400 transition-all hover:bg-red-500/10 hover:text-red-400">
+                <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-zinc-400 transition-all hover:bg-red-500/10 hover:text-red-400"
+                onClick={handleLogout}>
                     <LogOut className="h-5 w-5" />
                     Logout
                 </button>
