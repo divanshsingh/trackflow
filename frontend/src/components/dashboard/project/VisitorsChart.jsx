@@ -9,20 +9,20 @@ import {
     CartesianGrid,
 } from "recharts";
 
-const visitorData = [
-    { day: "Mon", visitors: 12 },
-    { day: "Tue", visitors: 19 },
-    { day: "Wed", visitors: 15 },
-    { day: "Thu", visitors: 28 },
-    { day: "Fri", visitors: 24 },
-    { day: "Sat", visitors: 35 },
-    { day: "Sun", visitors: 31 },
-];
+// const visitorData = [
+//     { day: "Mon", visitors: 12 },
+//     { day: "Tue", visitors: 19 },
+//     { day: "Wed", visitors: 15 },
+//     { day: "Thu", visitors: 28 },
+//     { day: "Fri", visitors: 24 },
+//     { day: "Sat", visitors: 35 },
+//     { day: "Sun", visitors: 31 },
+// ];
 
 
 
-export default function VisitorsChart() {
-    const totalVisitors = visitorData.reduce(
+export default function VisitorsChart({data}) {
+    const totalVisitors = (data ?? []).reduce(
     (sum, item) => sum + item.visitors,
     0
     );
@@ -38,9 +38,10 @@ export default function VisitorsChart() {
                         {totalVisitors}
                     </p>
 
-                    <p className="mt-1 text-sm text-emerald-400">
+                    {/* Remove for now */}
+                    {/* <p className="mt-1 text-sm text-emerald-400">
                         +12.4% from last week
-                    </p>
+                    </p> */}
                 </div>
 
                 <span className="rounded-full border border-zinc-700 bg-zinc-800 px-3 py-1 text-sm text-zinc-300">
@@ -53,20 +54,19 @@ export default function VisitorsChart() {
                     height="100%"
                 >
                     <LineChart 
-                    data={visitorData}
-                    stroke="#3b82f6"
-                    strokeWidth={3}
-                    dot={false}
-                    activeDot={{ r: 6 }}
+                    data={data}
                     >
                         {/* <CartesianGrid strokeDasharray="3 3" /> */}
                         <XAxis 
-                        dataKey="day"/>
+                        dataKey="date"/>
                         <YAxis />
                         <Tooltip />
                         <Line
-                            // type="monotone"
                             dataKey="visitors"
+                            stroke="#3b82f6"
+                            strokeWidth={3}
+                            dot={false}
+                            activeDot={{ r: 6 }}
                         />
                     </LineChart>
                 </ResponsiveContainer>
