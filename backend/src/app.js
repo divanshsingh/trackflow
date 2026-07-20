@@ -17,12 +17,14 @@ app.use(express.json()); // kyuki data json ke form me ayega to express use read
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://dh-virid.vercel.app",
+    ],
     credentials: true,
 }));
 
 app.use("/tracker", express.static(path.join(__dirname, "../../tracker")));
-console.log(path.join(__dirname, "../../tracker"));
 
 app.use("/api/auth", authRouter)
 app.use("/api/projects", projectRouter)

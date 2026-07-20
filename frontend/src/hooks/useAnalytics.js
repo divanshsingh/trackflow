@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getOverview } from "@/services/analytics.service";
+import { getOverview, getVisitorTrend, getTopPages, getDeviceStats, getReferrers} from "@/services/analytics.service";
 
 export default function useAnalytics(projectId){
     const [overview, setOverview] = useState(null);
@@ -7,6 +7,10 @@ export default function useAnalytics(projectId){
     const [error, setError] = useState("");
 
     const [visitorTrend, setVisitorTrend] = useState([]);
+    const [topPages, setTopPages] = useState([]);
+    const [deviceStats, setDeviceStats] = useState([]);
+    const [trafficSource, setTrafficSource] = useState([]);
+
 
     useEffect(() => {
         if (!projectId) return;
@@ -28,12 +32,44 @@ export default function useAnalytics(projectId){
             setError(err.message);
         }
         }
+        const fetchTopPages = async () => {
+            try {
+                const response = await getTopPages(projectId);
+                setTopPages(response.data);   
+            } catch (err) {
+                setError(err.message);
+            }
+        }
+        const fetchDeviceStats = async () => {
+            try {
+                const response = await getDeviceStats(projectId);
+                setDeviceStats(response.data);   
+            } catch (error) {
+                setError(error.message);
+            }
+
+        }
+        const fetchTrafficSource = async () => {
+            try {
+                const response = await getReferrers(projectId);
+                setTrafficSource(response.data);                
+            } catch (error) {
+                setError(error.message);
+            }
+
+        }
         fetchOverview();
         fetchVisitorTrend();
+        fetchTopPages();
+        fetchDeviceStats();
+        fetchTrafficSource();
     }, [projectId]);
     return {
         overview,
         visitorTrend,
+        topPages,
+        deviceStats,
+        trafficSource,
         loading,
         error,
     };

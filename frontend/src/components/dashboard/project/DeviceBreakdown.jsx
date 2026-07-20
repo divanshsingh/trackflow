@@ -1,18 +1,4 @@
-const devices = [
-    {
-        device: "Desktop",
-        percentage: 68,
-    },
-    {
-        device: "Mobile",
-        percentage: 27,
-    },
-    {
-        device: "Tablet",
-        percentage: 5,
-    },
-];
-export default function DeviceBreakdown() {
+export default function DeviceBreakdown({ data }) {
     return (
         <section className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6">
 
@@ -26,7 +12,7 @@ export default function DeviceBreakdown() {
                 </p>
             </div>
             <div className="space-y-5">
-    {devices.map((device) => (
+    {data.map((device) => (
         <div key={device.device}>
 
             <div className="mb-2 flex items-center justify-between">

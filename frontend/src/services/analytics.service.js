@@ -7,13 +7,13 @@ export const getOverview = async(projectId) => {
 
 
 export const getVisitorTrend = async(projectId) => {
-    const response = await api.get(`api/analytics/visitors-trend/${projectId}`);
+    const response = await api.get(`api/analytics/visitor-trend/${projectId}`);
     return response.data;
 }
 
 
 export const getTopPages = async(projectId) => {
-    const response = await api.get(`api/analytics/overview/top-pages/${projectId}`);
+    const response = await api.get(`api/analytics/top-pages/${projectId}`);
     return response.data;
 }
 
@@ -24,6 +24,6 @@ export const getReferrers = async(projectId) => {
 
 
 export const getDeviceStats = async(projectId) => {
-    const response = await api.get(`api/analytics/overview/device-stats/${projectId}`);
+    const response = await api.get(`api/analytics/device-stats/${projectId}`);
     return response.data;
 }

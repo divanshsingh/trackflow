@@ -1,5 +1,27 @@
 import prisma from "../lib/prisma.js"
 
+const formatTrafficSource = (referrer) => {
+
+    if (!referrer || referrer.trim() === "") return "Direct";
+
+    const value = referrer.toLowerCase();
+
+    if (value.includes("google")) return "Google";
+
+    if (value.includes("linkedin")) return "LinkedIn";
+
+    if (value.includes("twitter") || value.includes("x.com")) return "Twitter";
+
+    if (value.includes("facebook")) return "Facebook";
+
+    if (value.includes("github")) return "GitHub";
+
+    if (value.includes("youtube")) return "YouTube";
+
+    return "Other";
+
+};
+
 export const getAnalyticsOverviewService = async (projectId, userId) => {
     const project = await prisma.project.findFirst({
         where: {
@@ -106,6 +128,7 @@ export const getVisitorTrendService = async (projectId, userId) => {
             firstSeen: true,
         },        
     })
+    
     const trend = {}
     visitors.forEach((visitor) => {
         const date = visitor.firstSeen.toISOString().split("T")[0];
@@ -142,11 +165,17 @@ export const getReferrersService = async (projectId, userId) => {
         },
         take: 10,
     })  
+    const totalVisits = referrers.reduce(
+    (sum, referrer) => sum + referrer._count.referrer, 0
+    );
     return referrers.map((referrer) => ({
-        referrer: referrer.referrer && referrer.referrer.trim() !== ""
-            ? referrer.referrer
-            : "Direct",
-        visits: referrer._count.referrer,
+        source: formatTrafficSource(referrer.referrer),
+        percentage:
+        totalVisits === 0
+            ? 0
+            : Math.round(
+                  (referrer._count.referrer / totalVisits) * 100
+              ),
     }));    
 }
 
@@ -204,9 +233,10 @@ export const getDeviceStatsService = async (projectId, userId) => {
             },
         },
     });
+    const totalUsers = devices.reduce( (sum, device) => sum + device._count.device, 0 );
     return devices.map((device) => ({
         device: device.device,
-        users: device._count.device,
+        percentage: Math.round((device._count.device / totalUsers) * 100 ),
     }));
 };
 

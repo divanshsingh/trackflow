@@ -16,7 +16,7 @@ const trafficSources = [
         percentage: 10,
     },
 ];
-export default function TrafficSources() {
+export default function TrafficSources({ trafficSources }) {
     return (
         <section className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6">
 

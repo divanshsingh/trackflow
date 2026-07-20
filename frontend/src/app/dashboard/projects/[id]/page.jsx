@@ -15,6 +15,9 @@ export default function ProjectDetailsPage({ params }) {
         const {
             overview,
             visitorTrend,
+            topPages,
+            deviceStats,
+            trafficSource,
             loading: analyticsLoading,
             error: analyticsError,
          } = useAnalytics(id);
@@ -49,9 +52,9 @@ export default function ProjectDetailsPage({ params }) {
         <OverviewCards overview={overview}/>
         <VisitorsChart data={visitorTrend}/>
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
-            <TopPages />
-            <TrafficSources />
-            <DeviceBreakdown />
+            <TopPages data={topPages}/>
+            <TrafficSources trafficSources={trafficSource}/>
+            <DeviceBreakdown data={ deviceStats }/>
         </div>
     </div>
     );
