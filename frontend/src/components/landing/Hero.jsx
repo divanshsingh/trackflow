@@ -8,13 +8,8 @@ export default function Hero() {
     return(
         <section className="relative overflow-hidden bg-zinc-950">
             {/* {Glow Center} */}
-            <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                <div className="absolute left-1/2 top-0 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[140px]" />
-                <div className="absolute right-20 top-40 h-[250px] w-[250px] rounded-full bg-violet-600/10 blur-[120px]" />
-            </div>
-            {/* {Grid} */}
             <div
-                className="absolute inset-0 opacity-[0.04]"
+                className="absolute pointer-events-none inset-0 opacity-[0.04]"
                 style={{
                     backgroundImage: `
                         linear-gradient(to right, white 1px, transparent 1px),
@@ -23,6 +18,12 @@ export default function Hero() {
                     backgroundSize: "60px 60px",
                 }}
             />            
+            
+            {/* {Grid} */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute left-1/2 top-0 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[140px]" />
+                <div className="absolute right-20 top-40 h-[250px] w-[250px] rounded-full bg-violet-600/10 blur-[120px]" />
+            </div>            
             <div className="mx-auto flex max-w-7xl flex-col items-center px-6 pt-28 pb-52 text-center">
                 {/* <div className="absolute left-1/2 top-0 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[180px]" /> */}
                 
@@ -55,12 +56,14 @@ export default function Hero() {
                             <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                     </Link>
-                    <Button
-                        variant="outline"
-                        className=" h-12 rounded-xl border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-white">
-                        <Cat className="mr-2 h-4 w-4" />
-                        GitHub
-                    </Button>
+                    <Link href="https://github.com/divanshsingh/trackflow">
+                        <Button
+                            variant="outline"
+                            className=" h-12 rounded-xl border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-white">
+                            <Cat className="mr-2 h-4 w-4" />
+                            GitHub
+                        </Button>
+                    </Link>
                 </div>                                             
             </div>            
         </section>        

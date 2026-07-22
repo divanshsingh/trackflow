@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Users,
     Activity,
@@ -6,43 +8,38 @@ import {
 } from "lucide-react";
 import StatCard from "@/components/dashboard/StatCard";
 import ProjectsSection from "@/components/dashboard/ProjectsSection";
+import { getDashboardOverview } from "@/services/analytics.service";
+import { useQuery } from "@tanstack/react-query";
 
-const stats = [
-
-    {
-        title: "Visitors",
-        value: "12,481",
-        change: "+12%",
-        positive: true,
-        icon: Users,
-    },
-
-    {
-        title: "Sessions",
-        value: "8,294",
-        change: "+4%",
-        positive: true,
-        icon: Activity,
-    },
-
-    {
-        title: "Page Views",
-        value: "41,202",
-        change: "+18%",
-        positive: true,
-        icon: MousePointerClick,
-    },
-
-    {
-        title: "Avg. Session",
-        value: "2m 14s",
-        change: "-6%",
-        positive: false,
-        icon: Clock3,
-    },
-];
 
 export default function DashboardPage() {
+        const { data, isLoading } = useQuery({
+        queryKey: ["dashboard-overview"],
+        queryFn: getDashboardOverview,
+    });
+    const overview = data?.data;
+    const stats = [
+        {
+            title: "Visitors",
+            value: overview?.totalVisitors ?? 0,
+            icon: Users,
+        },
+        {
+            title: "Sessions",
+            value: overview?.totalSessions ?? 0,
+            icon: Activity,
+        },
+        {
+            title: "Page Views",
+            value: overview?.totalPageViews ?? 0,
+            icon: MousePointerClick,
+        },
+        {
+            title: "Pages / Session",
+            value: overview?.averagePagesPerSession ?? 0,
+            icon: Clock3,
+        },
+    ];
     return (
         <div>
             <div className="mb-8">

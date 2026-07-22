@@ -1,5 +1,10 @@
 import api from "@/lib/api";
 
+export const getDashboardOverview = async() => {
+    const response = await api.get("api/analytics/overview/");
+    return response.data;
+}
+
 export const getOverview = async(projectId) => {
     const response = await api.get(`api/analytics/overview/${projectId}`);
     return response.data;

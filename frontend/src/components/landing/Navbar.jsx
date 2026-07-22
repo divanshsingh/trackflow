@@ -33,14 +33,14 @@ export default function Navbar(){
                     </Link>
 
                     <Link
-                        href="#docs"
+                        href="/docs"
                         className="transition hover:text-white"
                     >
                         Docs
                     </Link>
 
                     <Link
-                        href="#github"
+                        href="https://github.com/divanshsingh/trackflow"
                         className="transition hover:text-white"
                     >
                         Github
@@ -57,7 +57,7 @@ export default function Navbar(){
                         Login
                     </Button>
                     </Link>
-                    <Link href="/login">
+                    <Link href="/signup">
                     <Button className="bg-blue-600 hover:bg-blue-500">
                         Get Started
                     </Button>

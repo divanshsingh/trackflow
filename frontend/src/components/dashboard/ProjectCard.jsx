@@ -3,6 +3,7 @@
 import { Globe, Copy, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function ProjectCard({ project }) {
     return (
@@ -55,9 +56,13 @@ export default function ProjectCard({ project }) {
                         Status
                     </p>
 
-                    <p className="mt-2 font-medium text-green-400">
-                        Tracking Ready
-                    </p>
+                        {(project.trackingStatus) ? 
+                        <p className="mt-2 font-medium text-green-400">
+                            "Tracking Active"
+                        </p> : 
+                        <p className="mt-2 font-medium text-orange-400">
+                            "Not Tracking"
+                        </p>}
                 </div>
             </div>
 
@@ -75,10 +80,12 @@ export default function ProjectCard({ project }) {
                     Copy API Key
                 </Button>
 
-                <Button className="bg-blue-600 hover:bg-blue-500">
-                    Analytics
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <Link href={`/dashboard/projects/${project.id}`}>
+                    <Button className="bg-blue-600 hover:bg-blue-500">
+                        Analytics
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                </Link>
             </div>
         </div>
     );
