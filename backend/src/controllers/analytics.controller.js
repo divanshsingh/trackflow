@@ -1,4 +1,5 @@
-import { 
+import {
+    getDashboardOverviewService,
     getAnalyticsOverviewService,
     getTopPagesService,
     getVisitorTrendService,
@@ -6,6 +7,21 @@ import {
     getBrowserStatsService,
     getDeviceStatsService,
     getOSStatsService } from "../services/analytics.service.js"
+
+export const getDashboardOverview = async (req, res) => {
+    try {
+        const overview = await getDashboardOverviewService(req.user.id);
+        return res.status(200).json({
+            success: true,
+            data: overview,
+            });        
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
 
 export const getAnalyticsOverview = async (req, res) => {
     try{

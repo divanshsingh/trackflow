@@ -22,6 +22,67 @@ const formatTrafficSource = (referrer) => {
 
 };
 
+export const getDashboardOverviewService = async (userId) => {
+    // Get all user's projects
+    const projects = await prisma.project.findMany({
+        where: {
+            userId,
+        },
+        select: {
+            id: true,
+        },
+    });
+    if (projects.length === 0) {
+        return {
+            totalProjects: 0,
+            totalVisitors: 0,
+            totalSessions: 0,
+            totalPageViews: 0,
+            averagePagesPerSession: 0,
+            trackingStatus: false,
+        };
+    }
+    const projectIds = projects.map(project => project.id);
+    // Total Visitors
+    const totalVisitors = await prisma.visitor.count({
+        where: {
+            projectId: {
+                in: projectIds,
+            },
+        },
+    });
+    // Total Sessions
+    const totalSessions = await prisma.session.count({
+        where: {
+            projectId: {
+                in: projectIds,
+            },
+        },
+    });
+    // Total Page Views
+    const totalPageViews = await prisma.pageView.count({
+        where: {
+            session: {
+                projectId: {
+                    in: projectIds,
+                },
+            },
+        },
+    });
+    const averagePagesPerSession =
+        totalSessions === 0
+            ? 0
+            : Number((totalPageViews / totalSessions).toFixed(2));
+    return {
+        totalProjects: projects.length,
+        totalVisitors,
+        totalSessions,
+        totalPageViews,
+        averagePagesPerSession,
+        trackingStatus: totalPageViews > 0,
+    };
+};
+
 export const getAnalyticsOverviewService = async (projectId, userId) => {
     const project = await prisma.project.findFirst({
         where: {
@@ -58,13 +119,16 @@ export const getAnalyticsOverviewService = async (projectId, userId) => {
 
 //  Average Pages Per Session
     const averagePagesPerSession =
-        totalSessions === 0 ? 0 : Number((totalPageViews / totalSessions).toFixed(2));     
+        totalSessions === 0 ? 0 : Number((totalPageViews / totalSessions).toFixed(2));    
+        
+    const trackingStatus = totalPageViews > 0;
     
     return {
         totalVisitors,
         totalSessions,
         totalPageViews,
         averagePagesPerSession,
+        trackingStatus,
     };
 }
 

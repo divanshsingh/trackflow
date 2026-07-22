@@ -1,4 +1,4 @@
-import { signupService, loginService } from "../services/auth.service.js";
+import { signupService, loginService, getMeService} from "../services/auth.service.js";
 
 export const signup = async (req, res) => {
     try {
@@ -60,3 +60,19 @@ export const logout = (req, res) => {
         message: "Logged out successfully"
     })
 }
+
+export const getMe = async (req, res) => {
+    try {
+        const user = await getMeService(req.user.id);
+        return res.status(200).json({
+            success: true,
+            data: user,
+        });         
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }   
+}
+

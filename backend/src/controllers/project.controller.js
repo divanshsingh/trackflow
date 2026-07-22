@@ -24,7 +24,7 @@ export const createProject = async (req, res) => {
 
 export const getProject = async (req, res) => {
   try {
-    const projects = await getProjectService(req.params.id, req.user.id);
+    const projects = await getProjectService(req.user.id);
     return res.status(200).json({
       success: true,
       data: projects,

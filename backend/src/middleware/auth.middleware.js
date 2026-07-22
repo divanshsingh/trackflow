@@ -11,6 +11,7 @@ export const authMiddleware = (req, res, next) => {
             });        
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded:", decoded);
     req.user = decoded; // iske andar se hume id mil rhi h, req.user.id
     
     next()            

@@ -32,7 +32,22 @@ export const getProjectService = async (userId) => {
         }
     });
 
-    return projects;
+    const projectsWithStatus = await Promise.all(
+        projects.map(async (project) => {
+            const totalPageViews = await prisma.pageView.count({
+                where: {
+                    session: {
+                        projectId: project.id,
+                    },
+                },
+            })
+            return {
+                ...project,
+                trackingStatus: totalPageViews > 0,
+            };
+        })
+    )
+    return projectsWithStatus;
 }
 
 export const getProjectByIdService = async (projectId, userId) => {
