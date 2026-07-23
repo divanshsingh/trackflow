@@ -57,9 +57,21 @@ export const getProjectByIdService = async (projectId, userId) => {
             userId,
         }
     })
+        const totalPageViews = await prisma.pageView.count({
+            where: {
+                session: {
+                    projectId: project.id,
+                },
+            },
+        })
+        return {
+            ...project,
+            trackingStatus: totalPageViews > 0,
+            };
+
     if (!project) {
         throw new Error("Project not found");
-    }  
+    }
     return project;  
 }
 
