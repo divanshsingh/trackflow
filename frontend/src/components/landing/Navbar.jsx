@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { BarChart3 } from "lucide-react";
 
-export default function Navbar(){
+export default function Navbar({user}){
     return(
         <header className="sticky top-0 z-50 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-xl">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
@@ -48,6 +48,7 @@ export default function Navbar(){
                 </nav>
 
                 {/* Right */}
+                {!user ? 
                 <div className="flex items-center gap-3">
                     <Link href="/login">
                     <Button
@@ -62,7 +63,13 @@ export default function Navbar(){
                         Get Started
                     </Button>
                     </Link>
-                </div>  
+                </div> :
+                <Link href="/dashboard">
+                    <Button
+                    className="bg-blue-600 hover:bg-blue-500">
+                    Dashboard
+                    </Button>
+                </Link>}
             </div>                                            
         </header>
     )

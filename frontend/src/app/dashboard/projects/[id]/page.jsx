@@ -9,6 +9,7 @@ import VisitorsChart from "@/components/dashboard/project/VisitorsChart";
 import useProject from "@/hooks/useProject";
 import useAnalytics from "@/hooks/useAnalytics";
 import { use, useEffect } from "react";
+import InstallationSection from "@/components/dashboard/InstallationSection";
 
 export default function ProjectDetailsPage({ params }) {
         const { id } = use(params);        
@@ -46,16 +47,27 @@ export default function ProjectDetailsPage({ params }) {
             </p>
             );
         }
+        console.log(project.trackingStatus);
+        
     return (
-        <div className="space-y-8">
+    <div className="space-y-8">
         <ProjectHeader project={project} />
-        <OverviewCards overview={overview}/>
-        <VisitorsChart data={visitorTrend}/>
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-            <TopPages data={topPages}/>
-            <TrafficSources trafficSources={trafficSource}/>
-            <DeviceBreakdown data={ deviceStats }/>
-        </div>
+
+        {!project.trackingStatus ? (
+            <InstallationSection apiKey={project.apiKey} />
+        ) : (
+            <>
+                <OverviewCards overview={overview} />
+
+                <VisitorsChart data={visitorTrend} />
+
+                <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                    <TopPages data={topPages} />
+                    <TrafficSources trafficSources={trafficSource} />
+                    <DeviceBreakdown data={deviceStats} />
+                </div>
+            </>
+        )}
     </div>
-    );
+);
 }
