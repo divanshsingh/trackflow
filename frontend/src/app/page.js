@@ -18,7 +18,7 @@ export default function Home() {
     return (
         <>
             <Navbar user={user}/>
-            <Hero />
+            <Hero user={user}/>
             <DashboardPreview />
             <Features />
             {!user ? <CTA /> : <LoggedInCTA />}

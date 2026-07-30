@@ -50,7 +50,7 @@ export default function ProjectDetailsPage({ params }) {
         console.log(project.trackingStatus);
         
     return (
-    <div className="space-y-8">
+    <div className="p-8">
         <ProjectHeader project={project} />
 
         {!project.trackingStatus ? (

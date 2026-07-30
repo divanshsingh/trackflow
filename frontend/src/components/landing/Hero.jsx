@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Cat } from "lucide-react";
 
-export default function Hero() {
+export default function Hero({user}) {
     return(
         <section className="relative overflow-hidden bg-zinc-950">
             {/* {Glow Center} */}
@@ -50,12 +50,19 @@ export default function Hero() {
 
                 {/* Buttons */}
                 <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                    {!user ? 
                     <Link href="/signup">
                         <Button className="h-12 rounded-xl bg-blue-600 px-6 font-medium hover:bg-blue-500">
                             Start Tracking Free
                             <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
-                    </Link>
+                    </Link> :
+                    <Link href="/dashboard">
+                        <Button className="h-12 rounded-xl bg-blue-600 px-6 font-medium hover:bg-blue-500">
+                            Go To Projects
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                    </Link>}
                     <Link href="https://github.com/divanshsingh/trackflow">
                         <Button
                             variant="outline"

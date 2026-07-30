@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signup } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const signupSchema = z.object({
     name: z
@@ -40,7 +41,7 @@ export default function SignupForm() {
         try {
             const response = await signup(data);
             console.log(response);
-            alert("Account created successfully!");
+            toast.success("Account created successfully!");
             router.push("/login");            
         } catch (error) {
             console.error(error);

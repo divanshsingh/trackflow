@@ -10,6 +10,7 @@ import StatCard from "@/components/dashboard/StatCard";
 import ProjectsSection from "@/components/dashboard/ProjectsSection";
 import { getDashboardOverview } from "@/services/analytics.service";
 import { useQuery } from "@tanstack/react-query";
+import Footer from "@/components/landing/Footer";
 
 
 export default function DashboardPage() {
@@ -41,7 +42,7 @@ export default function DashboardPage() {
         },
     ];
     return (
-        <div>
+        <div className="p-8 ">
             <div className="mb-8">
                 <h2 className="text-3xl font-bold text-white">
                     Overview

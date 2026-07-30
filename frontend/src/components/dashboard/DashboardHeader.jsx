@@ -15,7 +15,7 @@ export default function DashboardHeader() {
     })
     const user = data?.data;
     return (
-        <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-zinc-800 bg-zinc-950/80 px-8 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 flex h-23 items-center justify-between border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-xl px-6 py-6">
             {/* Left */}
             <div>
                 <h1 className="text-2xl font-bold text-white">

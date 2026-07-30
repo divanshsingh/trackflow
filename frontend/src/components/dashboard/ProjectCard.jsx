@@ -4,8 +4,12 @@ import { Globe, Copy, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import useAnalytics from "@/hooks/useAnalytics";
 
 export default function ProjectCard({ project }) {
+    console.log(project);
+    
     return (
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 transition-all hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/10">
             {/* Header */}
@@ -37,7 +41,7 @@ export default function ProjectCard({ project }) {
                     </p>
 
                     <h4 className="mt-2 text-2xl font-bold text-white">
-                        0
+                        {project.totalPageViews}
                     </h4>
                 </div>
 
@@ -70,7 +74,7 @@ export default function ProjectCard({ project }) {
             <div className="mt-8 flex items-center justify-between">
                 <Button
                     variant="outline"
-                    className="border-zinc-700 bg-zinc-900 hover:bg-zinc-800"
+                    className="border-zinc-700 bg-zinc-90 text-white"
                     onClick={() => {
                         navigator.clipboard.writeText(project.apiKey);
                         toast.success("API Key copied!");

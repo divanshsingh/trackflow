@@ -22,14 +22,8 @@ const menuItems = [
 
     {
         name: "Projects",
-        href: "/dashboard/projects",
+        href: "/projects",
         icon: FolderKanban,
-    },
-
-    {
-        name: "Analytics",
-        href: "/dashboard/analytics",
-        icon: ChartColumn,
     },
 
     {
@@ -59,7 +53,7 @@ export default function DashboardSidebar() {
             {/* Logo */}
             <div className="border-b border-zinc-800 px-6 py-6">
                 <Link
-                    href="/dashboard"
+                    href="/"
                     className="flex items-center gap-3"
                 >
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500">

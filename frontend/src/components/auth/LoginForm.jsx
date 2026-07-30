@@ -10,6 +10,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { login } from "@/services/auth.service";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
     email: z
@@ -35,7 +36,7 @@ export default function LoginForm() {
         try{
             const response = await login(data);
             console.log(response);
-            alert("Logged in successfully!");
+            toast.success("Logged in Succesfully...")
             router.push("/dashboard");   
         } catch(error){
             alert(
