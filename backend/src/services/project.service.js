@@ -25,30 +25,67 @@ export const createProjectService =  async ({ name, domain }, userId) => {
     return project
 }
 
-export const getProjectService = async (userId) => {
-    const projects = await prisma.project.findMany({
-        where: {
-            userId,
-        }
-    });
+export const getProjectService = async (userId, page, limit) => {
 
-    const projectsWithStatus = await Promise.all(
-        projects.map(async (project) => {
-            const totalPageViews = await prisma.pageView.count({
-                where: {
-                    session: {
-                        projectId: project.id,
+    const getProjectsWithStatus = async (projects) => {
+        return Promise.all(
+            projects.map(async (project) => {
+                const totalPageViews = await prisma.pageView.count({
+                    where: {
+                        session: {
+                            projectId: project.id,
+                        },
                     },
-                },
+                });
+
+                return {
+                    ...project,
+                    trackingStatus: totalPageViews > 0,
+                    totalPageViews,
+                };
             })
-            return {
-                ...project,
-                trackingStatus: totalPageViews > 0,
-            };
-        })
-    )
-    return projectsWithStatus;
-}
+        );
+    };
+
+    if (!page || !limit) {
+        const projects = await prisma.project.findMany({
+            where: { userId },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
+
+        return getProjectsWithStatus(projects);
+    }
+
+    const skip = (page - 1) * limit;
+
+    const [projects, totalProjects] = await Promise.all([
+        prisma.project.findMany({
+            where: { userId },
+            skip,
+            take: limit,
+            orderBy: {
+                createdAt: "desc",
+            },
+        }),
+        prisma.project.count({
+            where: { userId },
+        }),
+    ]);
+
+    return {
+        projects: await getProjectsWithStatus(projects),
+        pagination: {
+            page,
+            limit,
+            totalProjects,
+            totalPages: Math.ceil(totalProjects / limit),
+            hasNext: page * limit < totalProjects,
+            hasPrevious: page > 1,
+        },
+    };
+};
 
 export const getProjectByIdService = async (projectId, userId) => {
     const project = await prisma.project.findFirst({
@@ -57,6 +94,9 @@ export const getProjectByIdService = async (projectId, userId) => {
             userId,
         }
     })
+    if (!project) {
+        throw new Error("Project not found");
+    }    
         const totalPageViews = await prisma.pageView.count({
             where: {
                 session: {
@@ -68,11 +108,6 @@ export const getProjectByIdService = async (projectId, userId) => {
             ...project,
             trackingStatus: totalPageViews > 0,
             };
-
-    if (!project) {
-        throw new Error("Project not found");
-    }
-    return project;  
 }
 
 export const updateProjectService = async (projectId, userId, { name, domain }) => {
@@ -126,3 +161,4 @@ export const deleteProjectService = async (projectId, userId) => {
     });
     return; 
 }
+

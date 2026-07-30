@@ -24,11 +24,17 @@ export const createProject = async (req, res) => {
 
 export const getProject = async (req, res) => {
   try {
-    const projects = await getProjectService(req.user.id);
+    const userId = req.user.id;
+    const page = req.query.page ? Number(req.query.page) : undefined;
+    const limit = req.query.limit ? Number(req.query.limit) : undefined;
+
+    const result = await getProjectService(userId, page, limit);
+
     return res.status(200).json({
       success: true,
-      data: projects,
+      data: result,
     });
+
   } catch (error) {
     return res.status(400).json({
       success: false,
