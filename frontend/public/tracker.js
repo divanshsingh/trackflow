@@ -6,7 +6,6 @@
     function trackPage(){
     fetch(`${endpoint}/api/track`, {
         method: "POST",
-        credentials: "include", // very important (cookies)
         headers: {
             "Content-Type": "application/json",
         }, 
