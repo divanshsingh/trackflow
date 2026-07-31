@@ -22,7 +22,7 @@ const menuItems = [
 
     {
         name: "Projects",
-        href: "/projects",
+        href: "/dashboard/projects",
         icon: FolderKanban,
     },
 

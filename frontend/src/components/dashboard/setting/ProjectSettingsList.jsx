@@ -29,7 +29,7 @@ export default function ProjectSettingsList() {
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 py-4">
             {projects.map(project => (
                 <SettingsCard
                     key={project.id}

@@ -23,7 +23,7 @@ export default function ProjectsPage() {
     }
 console.log(projects);
     return (
-        <div className="mx-auto max-w-7xl space-y-8 px-6 py-8">
+        <div className="mx-auto max-w-7xl px-6 py-8">
 
             {/* Header */}
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -54,7 +54,7 @@ console.log(projects);
 
         ) : (
 
-            <div className="space-y-6">
+            <div className="space-y-6 pt-4 pb-4">
                 {projects.map((project) => (
                     <ProjectCard
                         key={project.id}
