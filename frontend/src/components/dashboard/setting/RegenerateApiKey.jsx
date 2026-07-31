@@ -13,7 +13,7 @@ export default function RegenerateApiKey() {
 
             <p className="mt-2 text-sm text-zinc-400">
                 Your current API key will stop working immediately.
-                Update your tracker script after regenerating.
+                Update your tracker script after regenerating. Not yet availble wait for V2.
             </p>
 
             <Button className="mt-6 bg-yellow-600 hover:bg-yellow-500">

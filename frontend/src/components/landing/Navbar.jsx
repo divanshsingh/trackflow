@@ -98,18 +98,18 @@ useEffect(() => {
                         </Link>
 
                         <Link href="/signup">
-                            <Button className="rounded-xl bg-blue-600 px-5 hover:bg-blue-500">
+                            <Button className="group rounded-xl bg-blue-600 px-5 hover:bg-blue-500">
                                 Get Started
-                                <ArrowRight className="ml-2 h-4 w-4" />
+                                <ArrowRight className="ml-2 h-4 w-4 transition-all duration-300 ease-out group-hover:translate-x-1.5" />
                             </Button>
                         </Link>
 
                     </div>
                 ) : (
                     <Link href="/dashboard">
-                        <Button className="rounded-xl bg-blue-600 px-5 hover:bg-blue-500">
+                        <Button className="group rounded-xl bg-blue-600 px-5 hover:bg-blue-500">
                             Go to Dashboard
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                            <ArrowRight className="ml-2 h-4 w-4 transition-all duration-300 ease-out group-hover:translate-x-1.5" />
                         </Button>
                     </Link>
                 )}

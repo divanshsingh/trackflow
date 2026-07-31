@@ -58,15 +58,15 @@ export default function Hero({user}) {
                         </Button>
                     </Link> :
                     <Link href="/dashboard">
-                        <Button className="h-12 rounded-xl bg-blue-600 px-6 font-medium hover:bg-blue-500">
+                        <Button className="group h-12 rounded-xl bg-blue-600 px-6 font-medium hover:bg-blue-500">
                             Go To Projects
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                            <ArrowRight className="ml-2 h-4 w-4 transition-all duration-300 ease-out group-hover:translate-x-1.5" />
                         </Button>
                     </Link>}
                     <Link href="https://github.com/divanshsingh/trackflow">
                         <Button
                             variant="outline"
-                            className=" h-12 rounded-xl border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-white">
+                            className=" h-12 rounded-xl border-zinc-700 bg-zinc-900 hover:bg-blue-500 text-white hover:text-white">
                             <Cat className="mr-2 h-4 w-4" />
                             GitHub
                         </Button>

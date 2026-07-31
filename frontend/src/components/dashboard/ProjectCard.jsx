@@ -8,10 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAnalytics from "@/hooks/useAnalytics";
 
 export default function ProjectCard({ project }) {
-    console.log(project);
-    
     return (
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 transition-all hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/10">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10">
             {/* Header */}
             <div className="flex items-start justify-between">
                 <div>

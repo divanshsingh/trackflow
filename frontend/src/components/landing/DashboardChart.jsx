@@ -1,5 +1,7 @@
 "use client";
 
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 import {
     ResponsiveContainer,
     LineChart,
@@ -20,7 +22,15 @@ const data = [
 ];
 
 export default function DashboardChart() {
+    const ref = useRef(null);
+    const isInView = useInView(ref, {
+        once: true,
+        amount: 0.5,
+    })
     return (
+        <div ref={ref}>
+            {isInView && 
+            
         <ResponsiveContainer width="100%" height={320}>
             <LineChart data={data}>
 
@@ -51,6 +61,8 @@ export default function DashboardChart() {
                 />
 
                 <Line
+                    isAnimationActive={isInView}
+                    animationDuration={1800}
                     type="monotone"
                     dataKey="visitors"
                     stroke="#3b82f6"
@@ -66,5 +78,7 @@ export default function DashboardChart() {
 
             </LineChart>
         </ResponsiveContainer>
+        }
+        </div>
     );
 }

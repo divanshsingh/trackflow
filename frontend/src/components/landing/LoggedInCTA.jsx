@@ -24,10 +24,10 @@ export default function LoggedInCTA() {
 
                 <div className="mt-10">
                     <Link href="/dashboard">
-                        <Button className="h-12 rounded-xl bg-blue-600 px-8 font-medium hover:bg-blue-500">
+                        <Button className="group h-12 rounded-xl bg-blue-600 px-8 font-medium hover:bg-blue-500">
                             <LayoutDashboard className="mr-2 h-5 w-5" />
                             Go to Dashboard
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                            <ArrowRight className="ml-2 h-4 w-4 transition-all duration-300 ease-out group-hover:translate-x-1.5" />
                         </Button>
                     </Link>
                 </div>

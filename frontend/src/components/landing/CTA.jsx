@@ -19,10 +19,10 @@ export default function CTA() {
                 <Link href="/signup">
                     <Button
                         size="lg"
-                        className="mt-10 bg-blue-600 hover:bg-blue-500"
+                        className="group mt-10 bg-blue-600 hover:bg-blue-500"
                     >
                         Create Free Account
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="ml-2 h-4 w-4 transition-all duration-300 ease-out group-hover:translate-x-1.5" />
                     </Button>
                 </Link>
             </div>

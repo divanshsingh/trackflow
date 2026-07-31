@@ -43,11 +43,6 @@ export default function ProjectSettingsPage({ params }) {
 
     return (
         <>
-            <DashboardHeader
-                title="Project Settings"
-                subtitle={`Manage settings for ${project.name}`}
-            />
-
             <div className="mx-auto max-w-5xl space-y-8 px-6 py-8">
 
                 <GeneralSettings project={project} />
