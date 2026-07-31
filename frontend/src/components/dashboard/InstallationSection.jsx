@@ -7,11 +7,13 @@ import { toast } from "sonner";
 import Link from "next/link";
 
 export default function InstallationSection({ apiKey }) {
+
     const script = useMemo(() => {
         return `<script
-  src="${process.env.NEXT_PUBLIC_TRACKER_URL}/tracker.js"
-  data-api-key="${apiKey}">
-</script>`;
+        src="https://trackflow-red-xi.vercel.app/tracker.js"
+        data-api-key="${apiKey}"
+        data-endpoint="https://trackflow-vaps.onrender.com">
+        </script>`;
     }, [apiKey]);
 
     const copyScript = async () => {
