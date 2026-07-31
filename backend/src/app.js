@@ -16,18 +16,24 @@ const __dirname = path.dirname(__filename);
 app.use(express.json()); // kyuki data json ke form me ayega to express use read kare sake. kyuki express can't parse json
 app.use(cookieParser())
 
-console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
-app.use(cors({
+// CORS for dashboard APIs
+const dashboardCors = cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-}));
+});
+
+// Public tracker endpoint
+const trackerCors = cors({
+    origin: true,
+});
+
+app.use("/api/auth", dashboardCors, authRouter);
+app.use("/api/projects", dashboardCors, projectRouter);
+app.use("/api/analytics", dashboardCors, analyticsRouter);
+
+app.use("/api/track", trackerCors, trackRouter);
 
 app.use("/tracker", express.static(path.join(__dirname, "../../tracker")));
-
-app.use("/api/auth", authRouter)
-app.use("/api/projects", projectRouter)
-app.use("/api/track", trackRouter)
-app.use("/api/analytics", analyticsRouter)
 
 
 export default app;
