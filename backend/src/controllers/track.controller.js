@@ -24,15 +24,15 @@ export const trackVisitor = async (req, res) => {
         if(result.isNewVisitor){
             res.cookie("visitorId", result.visitor.visitorId, {
                 httpOnly: true,
-                sameSite: "lax",
+                sameSite: "none",
                 secure: false,
                 maxAge: 365 * 24 * 60 * 60 * 1000,
             });            
         }
         if (result.isNewSession) {
             res.cookie("sessionId", result.session.sessionId, {
-                httpOnly: true,
-            sameSite: "lax",
+            httpOnly: true,
+            sameSite: "none",
             secure: false,
             });
         }        
