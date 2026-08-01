@@ -25,7 +25,7 @@ export const trackVisitor = async (req, res) => {
             res.cookie("visitorId", result.visitor.visitorId, {
                 httpOnly: true,
                 sameSite: "none",
-                secure: false,
+                secure: true,
                 maxAge: 365 * 24 * 60 * 60 * 1000,
             });            
         }
@@ -33,7 +33,7 @@ export const trackVisitor = async (req, res) => {
             res.cookie("sessionId", result.session.sessionId, {
             httpOnly: true,
             sameSite: "none",
-            secure: false,
+            secure: true,
             });
         }        
         return res.status(200).json({
