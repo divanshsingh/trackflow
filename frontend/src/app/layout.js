@@ -30,12 +30,6 @@ export default function RootLayout({ children }) {
           {children}
         </Providers>
         <Toaster richColors position="top-right" />
-        <Script
-          src="/tracker.js"
-          data-api-key="tf_xo_xuTS-3NH7pSEt_Rr2AUjV"
-          data-endpoint="https://trackflow-vaps.onrender.com"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );
