@@ -14,32 +14,19 @@ export const trackVisitor = async (req, res) => {
             path: req.body.path,
             title: req.body.title,
             referrer: req.body.referrer,
-            visitorId: req.cookies.visitorId,
-            sessionId: req.cookies.sessionId, 
+            visitorId: req.body.visitorId,
+            sessionId: req.body.sessionId, 
             browser,
             os,
             device,
-        });
-        // New visitor
-        if(result.isNewVisitor){
-            res.cookie("visitorId", result.visitor.visitorId, {
-                httpOnly: true,
-                sameSite: "none",
-                secure: true,
-                maxAge: 365 * 24 * 60 * 60 * 1000,
-            });            
-        }
-        if (result.isNewSession) {
-            res.cookie("sessionId", result.session.sessionId, {
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-            });
-        }        
+        });      
         return res.status(200).json({
             success: true,
             message: "Tracking request received",
-            data: result,            
+            data: {
+                visitorId: result.visitor.visitorId,
+                sessionId: result.session.sessionId,
+            },           
         });        
     } catch (error) {
         return res.status(400).json({
