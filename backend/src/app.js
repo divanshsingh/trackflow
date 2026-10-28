@@ -16,9 +16,23 @@ const __dirname = path.dirname(__filename);
 app.use(express.json()); // kyuki data json ke form me ayega to express use read kare sake. kyuki express can't parse json
 app.use(cookieParser())
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    "http://localhost:3000",
+    "https://trackflow-red-xi.vercel.app"
+].filter(Boolean);
+
 // CORS for dashboard APIs
 const dashboardCors = cors({
-    origin: process.env.FRONTEND_URL,
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
 });
 
@@ -30,9 +44,7 @@ const trackerCors = cors({
 app.use("/api/auth", dashboardCors, authRouter);
 app.use("/api/projects", dashboardCors, projectRouter);
 app.use("/api/analytics", dashboardCors, analyticsRouter);
-
 app.use("/api/track", trackerCors, trackRouter);
-
 app.use("/tracker", express.static(path.join(__dirname, "../../tracker")));
 
 

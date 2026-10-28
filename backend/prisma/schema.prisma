@@ -18,6 +18,10 @@ model User {
   name      String
   email     String    @unique
   password  String
+  googleId           String?   @unique
+  isVerified         Boolean   @default(false)
+  verificationOtp    String?
+  otpExpiresAt       DateTime?
   projects  Project[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
