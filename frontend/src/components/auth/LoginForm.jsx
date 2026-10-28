@@ -11,6 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { login } from "@/services/auth.service";
 import { toast } from "sonner";
+import { GoogleLogin } from "@react-oauth/google"; // 1. Google login import kiya
+import axios from "axios";
+
+
 
 const loginSchema = z.object({
     email: z
@@ -35,16 +39,34 @@ export default function LoginForm() {
     const onSubmit = async (data) => {
         try{
             const response = await login(data);
-            console.log(response);
             toast.success("Logged in Succesfully...")
             router.push("/dashboard");   
         } catch(error){
-            alert(
-                    error.response?.data?.message ||
-                    "Something went wrong."
+            toast.error(
+                    error.response?.data?.message || "Something went wrong."
                 );
         }
     }
+
+        // Google Login Success Handler
+    const handleGoogleSuccess = async (credentialResponse) => {
+            try {
+                const idToken = credentialResponse.credential;
+                
+                // Backend ke Google route par request bhej rahe hain
+                const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+                const response = await axios.post(
+                    `${API_URL}/api/auth/google`,
+                    { idToken },
+                    { withCredentials: true }
+                );
+
+                    toast.success("Logged in with Google successfully!");
+                    router.push('/dashboard');
+                } catch (error) {
+                    alert(error.response?.data?.message || "Google login failed");
+            }
+        };   
     return(
         <>
             <div className="mb-10">
@@ -123,6 +145,23 @@ export default function LoginForm() {
                     )}
                 </Button>
             </form>
+            <div className="mt-6 flex items-center justify-center">
+                <div className="border-t border-zinc-700 w-full"></div>
+                <span className="px-3 text-xs text-zinc-400 uppercase">Or</span>
+                <div className="border-t border-zinc-700 w-full"></div>
+            </div>
+
+            <div className="mt-6 flex justify-center w-full">
+                <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => {
+                        toast.error("Google Sign-In Failed");
+                    }}
+                    theme="filled_black"
+                    shape="rectangular"
+                    width="100%"
+                />
+            </div> 
             <p className="mt-8 text-center text-sm text-zinc-400">
                 Don't have an account?{" "}
                 <Link

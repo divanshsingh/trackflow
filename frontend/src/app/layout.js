@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
 import Providers from "@/providers/Providers";
 import { Toaster } from "sonner";
+import { GoogleProvider } from "@/providers/GoogleProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +26,11 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <GoogleProvider>
         <Providers>
           {children}
         </Providers>
+        </GoogleProvider>
         <Toaster richColors position="top-right" />
       </body>
     </html>
