@@ -27,7 +27,7 @@ function VerifyOtpContent() {
             setLoading(true);
             const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
             const response = await axios.post(
-                `${API_URL}/api/auth/signup`,
+                `${API_URL}/api/auth/verify-otp`,
                 { email, otp },
                 { withCredentials: true } // Cookie set karne ke liye zaroori hai
             );
