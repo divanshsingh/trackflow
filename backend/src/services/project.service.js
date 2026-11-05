@@ -14,7 +14,7 @@ export const createProjectService =  async ({ name, domain }, userId) => {
     }
 
     const apiKey = `tf_${nanoid(24)}`
-    const project = prisma.project.create({
+    const project = await prisma.project.create({
         data:{
             name,
             domain,
